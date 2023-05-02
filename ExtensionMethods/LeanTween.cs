@@ -23,7 +23,7 @@ public static class LeanTweenExtensions
     /// </summary>
     /// <param name="descr">The LTDescr object to get the unique ID from.</param>
     /// <param name="ids">The list of unique IDs to add the LTDescr's ID to.</param>
-    public static void StoreTweenId(this LTDescr descr, ref List<int> ids)
+    public static void StoreUniqueId(this LTDescr descr, ref List<int> ids)
     {
         ids.Add(descr.uniqueId);
     }
