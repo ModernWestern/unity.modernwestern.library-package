@@ -5,6 +5,16 @@ using System.Collections.Generic;
 
 public static class CollectionsExtensions
 {
+    public static List<T> ToList(this IEnumerable<T> collection)
+    {
+        return collection.ToList();
+    }
+    
+    public static T[] ToList(this IEnumerable<T> collection)
+    {
+        return collection.ToArray();
+    }
+    
     /// <summary>
     /// Applies a specified function to the elements of the collection and accumulates the result.
     /// </summary>
