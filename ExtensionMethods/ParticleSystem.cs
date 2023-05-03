@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public static class ParticleSystemExtension
+namespace ModernWestern
 {
-    public static void PlayAll(this ParticleSystem particle)
+    public static class ParticleSystemExtension
     {
-        particle.Play(true);
-    }
+        public static void PlayAll(this ParticleSystem particle)
+        {
+            particle.Play(true);
+        }
 
-    public static void StopAllAndClear(this ParticleSystem particle)
-    {
-        particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        public static void StopAllAndClear(this ParticleSystem particle)
+        {
+            particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
     }
 }

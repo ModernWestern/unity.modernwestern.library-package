@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public static class MaterialExtensions
+namespace ModernWestern
 {
-    public static bool IsDefaultUIMaterial(this Material material)
+    public static class MaterialExtensions
     {
-        const string Default = "Default UI Material";
+        public static bool IsDefaultUIMaterial(this Material material)
+        {
+            const string Default = "Default UI Material";
 
-        return material.name.Equals(Default);
-    }
+            return material.name.Equals(Default);
+        }
 
-    public static bool IsMaterial(this Material material, string name)
-    {
-        return material.shader.name.Equals(name);
+        public static bool IsMaterial(this Material material, string name)
+        {
+            return material.shader.name.Equals(name);
+        }
     }
 }
