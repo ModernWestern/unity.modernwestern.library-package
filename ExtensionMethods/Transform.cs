@@ -15,7 +15,7 @@ namespace ModernWestern
         {
             return transform.Cast<Transform>().ToArray();
         }
-
+ 
         /// <summary>
         /// Returns the last immediate child of the specified Transform, or null if it has no children.
         /// </summary>
@@ -31,7 +31,7 @@ namespace ModernWestern
         /// </summary>
         /// <param name="transform">The parent Transform.</param>
         /// <returns>An array of the immediate child GameObjects of the specified Transform.</returns>
-        public static GameObject[] GetChildrenAsGameObjects(this Transform transform)
+        public static GameObject[] GetChildrenGameObjects(this Transform transform)
         {
             return transform.GetChildren().ConvertAll(child => child.gameObject).ToArray();
         }

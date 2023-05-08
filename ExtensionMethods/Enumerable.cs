@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using Object = System.Object;
 
 namespace ModernWestern
 {
@@ -76,6 +77,23 @@ namespace ModernWestern
             {
                 action?.Invoke(i, collection[i]);
             }
+        }
+
+        /// <summary>
+        /// Executes the specified action on each element of the array, passing the index of the current element as a parameter to the action.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
+        /// <param name="collection">The array to iterate over.</param>
+        /// <param name="action">The action to perform on each element of the array, taking the index and the element as parameters.</param>
+        /// <param name="complete">A callback when the loop is complete. Returns the collection</param>
+        public static void ForEach<T>(this T[] collection, Action<int, T> action, Action<T[]> complete)
+        {
+            for (int i = 0, l = collection.Length; i < l; ++i)
+            {
+                action?.Invoke(i, collection[i]);
+            }
+
+            complete?.Invoke(collection);
         }
 
         /// <summary>
@@ -332,7 +350,28 @@ namespace ModernWestern
         /// </code>
         /// </example>
         public static string SeparateWith(this IEnumerable<string> values, string separator) => string.Join(separator, values);
-        
+
+        /// <summary>
+        /// Splits the elements of the collection into two arrays based on whether they satisfy the given predicate.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the collection.</typeparam>
+        /// <param name="collection">The collection to split.</param>
+        /// <param name="predicate">The predicate to use for splitting the collection.</param>
+        /// <returns>A tuple containing two arrays of elements, one for elements that satisfy the predicate and one for elements that do not.</returns>
+        /// <example>
+        /// <code>
+        /// { 1, 2, 3, 4, 5 }.SplitBy(number => number % 2 == 0) =  { 2, 4 } and { 1, 3, 5 }
+        /// </code>
+        /// </example>
+        public static (T[] True, T[] False) SplitByPredicate<T>(this T[] collection, Func<T, bool> predicate)
+        {
+            var tuple = (new T[collection.Length], new T[collection.Length]);
+
+            collection.ForEach((index, obj) => (predicate(obj) ? tuple.Item1 : tuple.Item2)[index] = obj);
+
+            return tuple;
+        }
+
         /// <summary>
         /// Splits the elements of the collection into two lists based on whether they satisfy the given predicate.
         /// </summary>
@@ -345,18 +384,19 @@ namespace ModernWestern
         /// { 1, 2, 3, 4, 5 }.SplitBy(number => number % 2 == 0) =  { 2, 4 } and { 1, 3, 5 }
         /// </code>
         /// </example>
-        public static (List<T> True, List<T> False) SplitByPredicate<T>(this ICollection<T> collection, Func<T, bool> predicate)
+        public static (List<T> True, List<T> False) SplitByPredicate<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
-            var tuple = (new List<T>(collection.Count), new List<T>(collection.Count));
+            var enumerable = collection as T[] ?? Enumerable.ToArray(collection);
 
-            foreach (var obj in collection)
+            var tuple = (new List<T>(enumerable.Count()), new List<T>(enumerable.Count()));
+
+            foreach (var obj in enumerable)
             {
                 (predicate(obj) ? tuple.Item1 : tuple.Item2).Add(obj);
             }
 
             return tuple;
         }
-
 
         /// <summary>
         /// Splits an enumerable object into smaller chunks of a specified size.
