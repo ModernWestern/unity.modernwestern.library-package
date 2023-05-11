@@ -5,6 +5,17 @@ namespace ModernWestern
 {
     public static class EnumExtensions
     {
+        /// <summary>
+        /// Converts an enum value to an integer.
+        /// </summary>
+        /// <typeparam name="T">The type of the enum.</typeparam>
+        /// <param name="enumItem">The enum value to convert to an integer.</param>
+        /// <returns>The integer representation of the enum value.</returns>
+        /// <example>
+        /// enum MyEnum { Value1 = 1, Value2 = 2, Value3 = 3 }
+        /// MyEnum myEnumValue = MyEnum.Value2;
+        /// int intValue = myEnumValue.ToInt();
+        /// </example>
         public static int ToInt<T>(this T enumItem) where T : Enum
         {
             return Convert.ToInt32(enumItem);
