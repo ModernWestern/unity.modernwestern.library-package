@@ -5,6 +5,11 @@ namespace ModernWestern
 {
     public static class EnumExtensions
     {
+        public static int ToInt<T>(this T enumItem) where T : Enum
+        {
+            return Convert.ToInt32(enumItem);
+        }
+
         /// <summary>
         /// Converts a string to an enum value of the specified type.
         /// </summary>
