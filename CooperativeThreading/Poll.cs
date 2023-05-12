@@ -55,7 +55,12 @@ namespace ModernWestern
         {
             Mono = mono;
 
-            TimeScale = new WaitForSeconds(1 / rate <= 0 ? Mathf.Abs(rate) : rate);
+            if (rate == 0)
+            {
+                return;
+            }
+
+            TimeScale = new WaitForSeconds(1 / Mathf.Abs(rate));
         }
 
         /// <summary>
@@ -78,7 +83,12 @@ namespace ModernWestern
                 Debug.LogWarning("The GameObject does not contains a MonoBehaviour component.", gameObject);
             }
 #endif
-            TimeScale = new WaitForSeconds(1 / rate <= 0 ? Mathf.Abs(rate) : rate);
+            if (rate == 0)
+            {
+                return;
+            }
+
+            TimeScale = new WaitForSeconds(1 / Mathf.Abs(rate));
         }
 
         /// <summary>
@@ -131,6 +141,8 @@ namespace ModernWestern
 
         private IEnumerator Set(Action awake, Action update, Action asleep)
         {
+            poll = true;
+
             awake?.Invoke();
 
             IsRunning = false;
@@ -153,11 +165,13 @@ namespace ModernWestern
 
         private IEnumerator Set(Func<bool> stop, Action awake, Action update, Action asleep)
         {
+            poll = true;
+
             awake?.Invoke();
 
             IsRunning = false;
 
-            while (poll && stop())
+            while (stop())
             {
                 yield return null;
 
@@ -175,6 +189,8 @@ namespace ModernWestern
 
         private IEnumerator SetTimeScale(Action awake, Action update, Action asleep)
         {
+            poll = true;
+
             awake?.Invoke();
 
             IsRunning = false;
