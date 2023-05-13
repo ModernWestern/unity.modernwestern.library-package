@@ -223,8 +223,6 @@ namespace ModernWestern
 
                 pollRoutine = null;
             }
-
-            GC.Collect();
         }
 
         public static implicit operator bool(Poll exists)
