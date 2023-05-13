@@ -171,7 +171,7 @@ namespace ModernWestern
 
             IsRunning = false;
 
-            while (stop())
+            while (poll && stop())
             {
                 yield return null;
 
