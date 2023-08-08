@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using UnityEngine;
+using System.Linq;
 using System.Collections.Generic;
-using Object = System.Object;
 
 namespace ModernWestern
 {
@@ -16,6 +15,20 @@ namespace ModernWestern
         public static T[] ToArray<T>(this IEnumerable<T> collection)
         {
             return Enumerable.ToArray(collection);
+        }
+
+        /// <summary>
+        /// Adds multiple collections of items to the current List.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the collections.</typeparam>
+        /// <param name="collection">The List to which the collections will be added.</param>
+        /// <param name="collections">A variable number of Lists containing items to be added.</param>
+        public static void AddRange<T>(this List<T> collection, params List<T>[] collections)
+        {
+            for (int i = 0, l = collections.Length; i < l; i++)
+            {
+                collection.AddRange(collections[i]);
+            }
         }
 
         /// <summary>
