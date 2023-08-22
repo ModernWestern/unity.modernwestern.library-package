@@ -65,11 +65,28 @@ namespace ModernWestern
         }
 
         /// <summary>
-        /// Checks if a string contains any of the specified keywords using the specified string comparison type and returns a boolean value indicating whether a match was found.
+        /// Checks whether the given string contains any of the specified keywords, ignoring case.
         /// </summary>
+        /// /// <example>
+        /// <code>
+        /// "The quick brown fox jumps over the lazy dog.".ContainsAny("quick", "lazy"); // Returns true
+        /// "The quick brown fox jumps over the lazy dog.".ContainsAny("quickly", "lazy"); // Returns true (partial match)
+        /// "The quick brown fox jumps over the lazy dog.".ContainsAny("cat", "roll"); // Returns false
+        /// </code>
+        /// </example>
         public static bool ContainsAny(this string str, params string[] keywords)
         {
             return keywords.Any(keyword => str.IndexOf(keyword, StringComparison.CurrentCultureIgnoreCase) >= 0);
+        }
+
+        /// <summary>
+        /// Checks whether the given string contains any of the specified keywords, ignoring case.
+        /// </summary>
+        public static bool Contains(this string str, params string[] keywords)
+        {
+            const char space = ' ';
+
+            return keywords.Any(keyword => str.Split(space).Contains(keyword, StringComparer.CurrentCultureIgnoreCase));
         }
 
         /// <summary>
