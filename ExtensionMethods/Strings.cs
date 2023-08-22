@@ -47,27 +47,20 @@ namespace ModernWestern
         /// <summary>
         /// Transforms a given string in camel case to a human-readable format by adding spaces before each uppercase letter that is preceded by a lowercase letter or a non-letter character
         /// </summary>
+        /// /// <example>
+        /// <code>
+        /// "camelCaseString".DeconstructCamelCase(); // deconstructed will be "camel Case String"
+        /// </code>
+        /// </example>
         public static string DeconstructCamelCase(this string str)
         {
             return Regex.Replace(Regex.Replace(str, @"(\P{Ll})(\P{Ll}\p{Ll})", "$1 $2"), @"(\p{Ll})(\P{Ll})", "$1 $2");
         }
 
         /// <summary>
-        /// Checks if a string contains any of the specified keywords using the specified string comparison type and returns a boolean value indicating whether a match was found.
-        /// </summary>
-        public static bool ContainsAny(this string str, bool ignoreCase, CultureInfo culture, params string[] keywords)
-        {
-            culture ??= CultureInfo.CurrentCulture;
-
-            var compareOptions = ignoreCase ? CompareOptions.IgnoreCase : CompareOptions.None;
-
-            return keywords.Any(keyword => culture.CompareInfo.IndexOf(str, keyword, compareOptions) >= 0);
-        }
-
-        /// <summary>
         /// Checks whether the given string contains any of the specified keywords, ignoring case.
         /// </summary>
-        /// /// <example>
+        /// <example>
         /// <code>
         /// "The quick brown fox jumps over the lazy dog.".ContainsAny("quick", "lazy"); // Returns true
         /// "The quick brown fox jumps over the lazy dog.".ContainsAny("quickly", "lazy"); // Returns true (partial match)
