@@ -18,6 +18,24 @@ namespace ModernWestern
         }
 
         /// <summary>
+        /// Adds an item to a generic List collection only if the item does not already exist within the collection.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the List.</typeparam>
+        /// <param name="collection">The List collection to which the item is to be added.</param>
+        /// <param name="item">The item of type T to be added to the collection.</param>
+        public static bool AddUnique<T>(this List<T> collection, T item)
+        {
+            if (collection.Contains(item))
+            {
+                return false;
+            }
+
+            collection.Add(item);
+
+            return true;
+        }
+
+        /// <summary>
         /// Adds multiple collections of items to the current List.
         /// </summary>
         /// <typeparam name="T">The type of elements in the collections.</typeparam>
